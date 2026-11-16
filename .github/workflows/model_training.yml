@@ -1,0 +1,39 @@
+name: Automated Model Training
+on:
+ push:
+  branches: ["main"]
+ pull_request:
+  branches: ["main"]
+jobs: 
+ train-model: 
+  runs- on: ubuntu- latest
+  steps:
+   - name: Checkout Repository Code
+    uses: action/checkout@v4
+   - name: Check Repository Files
+     run: |
+      echo "Current directory: "
+      pwd
+      echo "Files in repositoy root: " 
+      ls- la
+      echo"Searching for test_model.py: "
+      find.- name "test_model.py"
+   - name: Cheakout Repository code
+     uses: action/cheakout@4
+   - name: Set up Python
+     uses: action/setup- python@v5
+     with:
+     python- version: '3.10'
+   - name: lnstall Dependencies
+     run: |
+      python- m pip install -- upgrade pip
+      python - mpip install pandas numpy scikit- learn joblib pytest
+   - name: Execute Model Training
+     run: python predi.py
+   - name: Upload Trained Model
+     uses: actions/upload-artifact@v4
+     with:
+     name: trained- ml- model
+     path: best_moddel.joblib
+  
+
